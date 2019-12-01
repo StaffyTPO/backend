@@ -12,11 +12,15 @@ const Podjetje = new GraphQLObjectType({
   }
 });
 
-const getPodjetjeById = async () => {
-  const result = await global.pg.query(`
+const getPodjetjeById = async id => {
+  const result = await global.pg.query(
+    `
     SELECT *
     FROM podjetje
-  `);
+    WHERE id = $1
+  `,
+    [id]
+  );
   return result.rows[0];
 };
 
