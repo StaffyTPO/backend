@@ -3,6 +3,7 @@ const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt
 const { Podjetje, getPodjetjeById } = require("./Podjetje");
 const { Uporabnik, getUporabniki, addUporabnik } = require("./Uporabnik");
 const { Aktivnost, getAktivnosti } = require("./Aktivnost");
+const { Komentar, addKomentar } = require("./Komentar");
 
 const Query = new GraphQLObjectType({
   name: "Query",
@@ -71,6 +72,25 @@ const Mutation = new GraphQLObjectType({
       },
       resolve: (parent, args, contex) =>
         addUporabnik(args.ime, args.priimek, args.slika, args.telefon, args.email, args.password, args.podjetje)
+    },
+    dodajKomentar: {
+      description: "Dodajanje komentarja na aktivnost, podamo mu id Aktivnosti",
+      type: Komentar,
+      args: {
+        sporocilo: {
+          type: GraphQLString
+        },
+        datum: {
+          type: GraphQLString
+        },
+        uporabnik: {
+          type: GraphQLInt
+        },
+        aktivnost: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => addKomentar(args.sporocilo, args.datum, args.uporabnik, args.aktivnost)
     }
   }
 });
