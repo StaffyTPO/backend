@@ -50,4 +50,16 @@ const getAktivnosti = async podjetjeId => {
   return result.rows;
 };
 
-module.exports = { Aktivnost, getAktivnosti };
+const getAktivnostiZaVrstoSluzbe = async vrstaSluzbeId => {
+  const result = await global.pg.query(
+    `
+    SELECT *
+    FROM aktivnost
+    WHERE vrsta_sluzbe = $1
+    `,
+    [vrstaSluzbeId]
+  );
+  return result.rows;
+};
+
+module.exports = { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe };
