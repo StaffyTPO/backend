@@ -44,16 +44,3 @@ global.pg
       console.log("Running a GraphQL API server at localhost:5000/graphql");
     });
   });
-
-// const getProjects = async () => {
-//   const result = await global.pg.query(`
-//         SELECT *
-//         FROM podjetje
-//     `);
-
-//   result.rows.map(row => {
-//     console.log(row);
-//   });
-// };
-
-// getProjects();
