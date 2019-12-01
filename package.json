@@ -1,0 +1,31 @@
+{
+  "name": "staffy",
+  "version": "1.0.0",
+  "description": "Backend za Staffy App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StaffyTPO/backend.git"
+  },
+  "author": "Staffy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StaffyTPO/backend/issues"
+  },
+  "homepage": "https://github.com/StaffyTPO/backend#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.5.6",
+    "graphql-iso-date": "^3.6.1",
+    "pg": "^7.12.1"
+  }
+}
