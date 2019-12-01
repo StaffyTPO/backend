@@ -1,5 +1,6 @@
 const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLString, GraphQLList, GraphQLBoolean } = require("graphql");
 const { Prostor, getProstorById } = require("./Prostor");
+const { VrstaSluzbe, getVrstaSluzbeById } = require("./VrstaSluzbe");
 
 const Aktivnost = new GraphQLObjectType({
   name: "Aktivnost",
@@ -21,7 +22,8 @@ const Aktivnost = new GraphQLObjectType({
       type: GraphQLInt
     },
     vrsta_sluzbe: {
-      type: GraphQLInt
+      type: VrstaSluzbe,
+      resolve: parent => getVrstaSluzbeById(parent.vrsta_sluzbe)
     },
     status: {
       type: GraphQLInt

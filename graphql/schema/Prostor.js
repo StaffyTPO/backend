@@ -16,7 +16,6 @@ const Prostor = new GraphQLObjectType({
 });
 
 const getProstorById = async prostorId => {
-  console.log(prostorId);
 
   const result = await global.pg.query(
     `
