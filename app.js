@@ -8,11 +8,11 @@ dotenv.config();
 const app = express();
 
 global.pg = new Client({
-  host: process.env.HOST,
+  host: process.env.DB_HOST,
   port: 5432,
-  database: process.env.DATABASE,
-  user: process.env.USERNAME,
-  password: process.env.PASSWORD,
+  database: process.env.DB_DATABASE,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
   ssl: true
 });
 
@@ -44,16 +44,3 @@ global.pg
       console.log("Running a GraphQL API server at localhost:5000/graphql");
     });
   });
-
-// const getProjects = async () => {
-//   const result = await global.pg.query(`
-//         SELECT *
-//         FROM podjetje
-//     `);
-
-//   result.rows.map(row => {
-//     console.log(row);
-//   });
-// };
-
-// getProjects();
