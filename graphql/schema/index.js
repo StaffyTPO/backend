@@ -3,7 +3,7 @@ const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt
 const { Podjetje, getPodjetjeById } = require("./Podjetje");
 const { Uporabnik, getUporabniki, addUporabnik } = require("./Uporabnik");
 const { Komentar, addKomentar } = require("./Komentar");
-const { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe } = require("./Aktivnost");
+const { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost } = require("./Aktivnost");
 const { VrstaSluzbe, getVrstaSluzbeById } = require("./VrstaSluzbe");
 
 const Query = new GraphQLObjectType({
@@ -102,6 +102,47 @@ const Mutation = new GraphQLObjectType({
         }
       },
       resolve: (parent, args, contex) => addKomentar(args.sporocilo, args.datum, args.uporabnik, args.aktivnost)
+    },
+    dodajAktivnost: {
+      description: "Dodajanje aktivnosti, možnosti podajati različne parametre, niso obvezni",
+      type: Aktivnost,
+      args: {
+        naslov: {
+          type: GraphQLString
+        },
+        opis: {
+          type: GraphQLString
+        },
+        prostor: {
+          type: GraphQLInt
+        },
+        prioriteta: {
+          type: GraphQLInt
+        },
+        vrsta_sluzbe: {
+          type: GraphQLInt
+        },
+        status: {
+          type: GraphQLInt
+        },
+        koncni_datum: {
+          type: GraphQLString
+        },
+        podjetje: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) =>
+        addAktivnost(
+          args.naslov,
+          args.opis,
+          args.prostor,
+          args.prioriteta,
+          args.vrsta_sluzbe,
+          args.status,
+          args.koncni_datum,
+          args.podjetje
+        )
     }
   }
 });

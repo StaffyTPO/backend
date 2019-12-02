@@ -39,8 +39,7 @@ const Aktivnost = new GraphQLObjectType({
 
 const getAktivnosti = async podjetjeId => {
   const result = await global.pg.query(
-    `
-    SELECT *
+    `SELECT *
     FROM aktivnost
     WHERE podjetje = $1
   `,
@@ -52,8 +51,7 @@ const getAktivnosti = async podjetjeId => {
 
 const getAktivnostiZaVrstoSluzbe = async vrstaSluzbeId => {
   const result = await global.pg.query(
-    `
-    SELECT *
+    `SELECT *
     FROM aktivnost
     WHERE vrsta_sluzbe = $1
     `,
@@ -62,4 +60,16 @@ const getAktivnostiZaVrstoSluzbe = async vrstaSluzbeId => {
   return result.rows;
 };
 
-module.exports = { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe };
+const addAktivnost = async (naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje) => {
+  const result = await global.pg.query(
+    `INSERT INTO aktivnost(naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+    RETURNING *
+    `,
+    [naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje]
+  );
+
+  return result.rows[0];
+};
+
+module.exports = { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost };
