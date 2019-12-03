@@ -12,8 +12,6 @@ jobs:
         node-version: [8.x, 10.x, 12.x]
 
     steps:
-    - name: Run ESLint
-      uses: stefanoeb/eslint-action@1.0.0
     - name: GraphQL query
       uses: helaili/github-graphql-action@1.0
     - uses: actions/checkout@v1
