@@ -52,4 +52,16 @@ const addUporabnik = async (ime, priimek, slika, telefon, email, password, podje
   return result.rows[0];
 };
 
-module.exports = { Uporabnik, addUporabnik, getUporabniki };
+const getUporabnikById = async id => {
+  const result = await global.pg.query(
+    `
+    SELECT *
+    FROM uporabnik
+    WHERE id = $1
+  `,
+    [id]
+  );
+  return result.rows[0];
+};
+
+module.exports = { Uporabnik, addUporabnik, getUporabniki, getUporabnikById };

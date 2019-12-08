@@ -1,9 +1,16 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt, GraphQLBoolean } = require("graphql");
 
 const { Podjetje, getPodjetjeById } = require("./Podjetje");
-const { Uporabnik, getUporabniki, addUporabnik } = require("./Uporabnik");
+const { Uporabnik, getUporabniki, addUporabnik, getUporabnikById } = require("./Uporabnik");
 const { Komentar, addKomentar } = require("./Komentar");
-const { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost, getAktivnostiGledeNaStatus, changeAktivnost } = require("./Aktivnost");
+const {
+  Aktivnost,
+  getAktivnosti,
+  getAktivnostiZaVrstoSluzbe,
+  addAktivnost,
+  getAktivnostiGledeNaStatus,
+  changeAktivnost
+} = require("./Aktivnost");
 const { VrstaSluzbe, getVrstaSluzbeById } = require("./VrstaSluzbe");
 
 const Query = new GraphQLObjectType({
@@ -64,6 +71,16 @@ const Query = new GraphQLObjectType({
         }
       },
       resolve: (parent, args, contex) => getAktivnostiZaVrstoSluzbe(args.podjetjeId, args.vrstaSluzbeId)
+    },
+    uporabnik: {
+      description: "Uporabnik. Podamo id uporabnika da dobimo podatke samo o enem uporabniku",
+      type: Uporabnik,
+      args: {
+        id: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => getUporabnikById(args.id)
     }
   }
 });
