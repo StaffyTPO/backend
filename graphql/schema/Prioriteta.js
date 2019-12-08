@@ -1,27 +1,24 @@
 const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLString, GraphQLList, GraphQLBoolean } = require("graphql");
 
-const VrstaSluzbe = new GraphQLObjectType({
-  name: "VrstaSluzbe",
+const Prioriteta = new GraphQLObjectType({
+  name: "Prioriteta",
   fields: {
     id: {
       type: GraphQLID
     },
-    podjetje: {
-      type: GraphQLInt
-    },
-    naziv: {
+    tip: {
         type: GraphQLString
     }, 
-    barva: {
-        type: GraphQLString
+    podjetje: {
+        type: GraphQLInt
     }
   }
 });
 
-const getVrstaSluzbeById = async id => {
+const getPrioritetaById = async id => {
   const result = await global.pg.query(`
     SELECT *
-    FROM vrsta_sluzbe
+    FROM prioriteta
     WHERE id = $1
   `, 
   [id]
@@ -29,4 +26,4 @@ const getVrstaSluzbeById = async id => {
   return result.rows[0];
 };
 
-module.exports = { VrstaSluzbe, getVrstaSluzbeById };
+module.exports = { Prioriteta, getPrioritetaById };

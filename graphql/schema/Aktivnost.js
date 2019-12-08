@@ -1,6 +1,8 @@
 const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLString, GraphQLList, GraphQLBoolean } = require("graphql");
 const { Prostor, getProstorById } = require("./Prostor");
 const { VrstaSluzbe, getVrstaSluzbeById } = require("./VrstaSluzbe");
+const { Prioriteta, getPrioritetaById } = require("./Prioriteta");
+const { Status, getStatusById } = require("./Status");
 
 const Aktivnost = new GraphQLObjectType({
   name: "Aktivnost",
@@ -19,14 +21,16 @@ const Aktivnost = new GraphQLObjectType({
       resolve: parent => getProstorById(parent.prostor)
     },
     prioriteta: {
-      type: GraphQLInt
+      type: Prioriteta,
+      resolve: parent => getPrioritetaById(parent.prioriteta)
     },
     vrsta_sluzbe: {
       type: VrstaSluzbe,
       resolve: parent => getVrstaSluzbeById(parent.vrsta_sluzbe)
     },
     status: {
-      type: GraphQLInt
+      type: Status,
+      resolve: parent => getStatusById(parent.status)
     },
     koncni_datum: {
       type: GraphQLString
@@ -60,6 +64,17 @@ const getAktivnostiZaVrstoSluzbe = async vrstaSluzbeId => {
   return result.rows;
 };
 
+const getAktivnostiGledeNaStatus = async statusId => {
+  const result = await global.pg.query(
+    `SELECT *
+    FROM aktivnost
+    WHERE status = $1
+    `,
+    [statusId]
+  );
+  return result.rows;
+};
+
 const addAktivnost = async (naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje) => {
   const result = await global.pg.query(
     `INSERT INTO aktivnost(naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje)
@@ -72,4 +87,4 @@ const addAktivnost = async (naslov, opis, prostor, prioriteta, vrsta_sluzbe, sta
   return result.rows[0];
 };
 
-module.exports = { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost };
+module.exports = { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost, getAktivnostiGledeNaStatus };

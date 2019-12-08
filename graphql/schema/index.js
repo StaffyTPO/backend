@@ -3,7 +3,7 @@ const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt
 const { Podjetje, getPodjetjeById } = require("./Podjetje");
 const { Uporabnik, getUporabniki, addUporabnik } = require("./Uporabnik");
 const { Komentar, addKomentar } = require("./Komentar");
-const { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost } = require("./Aktivnost");
+const { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost, getAktivnostiGledeNaStatus } = require("./Aktivnost");
 const { VrstaSluzbe, getVrstaSluzbeById } = require("./VrstaSluzbe");
 
 const Query = new GraphQLObjectType({
@@ -28,6 +28,16 @@ const Query = new GraphQLObjectType({
         }
       },
       resolve: (parent, args, contex) => getUporabniki(args.id)
+    },
+    aktivnostiPoStatusih: {
+      description: "Vse aktivnosti po statusih. Podamo id statusa in dobimo naprimer vse aktivnosti, ki pripadajo statusu",
+      type: new GraphQLList(Aktivnost),
+      args: {
+        statusId: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => getAktivnostiGledeNaStatus(args.statusId)
     },
     aktivnosti: {
       description: "Vse aktivnosti za neko podjetje",
