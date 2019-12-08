@@ -53,24 +53,24 @@ const getAktivnosti = async podjetjeId => {
   return result.rows;
 };
 
-const getAktivnostiZaVrstoSluzbe = async vrstaSluzbeId => {
+const getAktivnostiZaVrstoSluzbe = async (podjetjeId, vrstaSluzbeId) => {
   const result = await global.pg.query(
     `SELECT *
     FROM aktivnost
-    WHERE vrsta_sluzbe = $1
+    WHERE vrsta_sluzbe = $2 AND podjetje = $1
     `,
-    [vrstaSluzbeId]
+    [podjetjeId, vrstaSluzbeId]
   );
   return result.rows;
 };
 
-const getAktivnostiGledeNaStatus = async statusId => {
+const getAktivnostiGledeNaStatus = async (podjetjeId, statusId) => {
   const result = await global.pg.query(
     `SELECT *
     FROM aktivnost
-    WHERE status = $1
+    WHERE status = $2 AND podjetje = $1
     `,
-    [statusId]
+    [podjetjeId, statusId]
   );
   return result.rows;
 };

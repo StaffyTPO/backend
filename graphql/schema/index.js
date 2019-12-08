@@ -30,14 +30,17 @@ const Query = new GraphQLObjectType({
       resolve: (parent, args, contex) => getUporabniki(args.id)
     },
     aktivnostiPoStatusih: {
-      description: "Vse aktivnosti po statusih. Podamo id statusa in dobimo naprimer vse aktivnosti, ki pripadajo statusu",
+      description: "Vse aktivnosti po statusih. Podamo id statusa ter id podjetja in dobimo naprimer vse aktivnosti, ki pripadajo statusu",
       type: new GraphQLList(Aktivnost),
       args: {
+        podjetjeId: {
+          type: GraphQLInt
+        },
         statusId: {
           type: GraphQLInt
         }
       },
-      resolve: (parent, args, contex) => getAktivnostiGledeNaStatus(args.statusId)
+      resolve: (parent, args, contex) => getAktivnostiGledeNaStatus(args.statusId, args.podjetjeId)
     },
     aktivnosti: {
       description: "Vse aktivnosti za neko podjetje",
@@ -50,14 +53,17 @@ const Query = new GraphQLObjectType({
       resolve: (parent, args, contex) => getAktivnosti(args.podjetjeId)
     },
     aktivnostiSluzbe: {
-      description: "Vse aktivnosti za podano sluzbo. Podamo id sluzbe in dobimo vse aktivnosti, ki ji pripadajo.",
+      description: "Vse aktivnosti za podano sluzbo. Podamo id sluzbe ter id podjetja in dobimo vse aktivnosti, ki ji pripadajo.",
       type: new GraphQLList(Aktivnost),
       args: {
+        podjetjeId: {
+          type: GraphQLInt
+        },
         vrstaSluzbeId: {
           type: GraphQLInt
         }
       },
-      resolve: (parent, args, contex) => getAktivnostiZaVrstoSluzbe(args.vrstaSluzbeId)
+      resolve: (parent, args, contex) => getAktivnostiZaVrstoSluzbe(args.podjetjeId, args.vrstaSluzbeId)
     }
   }
 });
