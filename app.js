@@ -41,6 +41,6 @@ global.pg
   .then(() => {
     app.listen(process.env.PORT || 5000, function() {
       console.log("Aplication worker " + process.pid + " started...");
-      console.log("Running a GraphQL API server at localhost:5000/graphql");
+      console.log("Running a GraphQL API server at http://localhost:5000/graphql");
     });
   });
