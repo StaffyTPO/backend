@@ -87,9 +87,6 @@ const addAktivnost = async (naslov, opis, prostor, prioriteta, vrsta_sluzbe, sta
   return result.rows[0];
 };
 
-<<<<<<< HEAD
-module.exports = { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost, getAktivnostiGledeNaStatus };
-=======
 const changeAktivnost = async (id, naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje) => {
   const result = await global.pg.query(
     `UPDATE aktivnost
@@ -103,5 +100,4 @@ const changeAktivnost = async (id, naslov, opis, prostor, prioriteta, vrsta_sluz
   return result.rows[0];
 };
 
-module.exports = { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost, changeAktivnost };
->>>>>>> 87979c1f1adc453cce68368ed12ff480bd2a1cfe
+module.exports = { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost, getAktivnostiGledeNaStatus, changeAktivnost };
