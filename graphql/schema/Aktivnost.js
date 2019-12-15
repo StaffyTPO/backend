@@ -41,6 +41,18 @@ const Aktivnost = new GraphQLObjectType({
   }
 });
 
+const getAktivnostiById = async aktivnostId => {
+  const result = await global.pg.query(
+    `SELECT *
+    FROM aktivnost
+    WHERE id = $1
+  `,
+    [aktivnostId]
+  );
+
+  return result.rows[0];
+};
+
 const getAktivnosti = async podjetjeId => {
   const result = await global.pg.query(
     `SELECT *
@@ -100,4 +112,12 @@ const changeAktivnost = async (id, naslov, opis, prostor, prioriteta, vrsta_sluz
   return result.rows[0];
 };
 
-module.exports = { Aktivnost, getAktivnosti, getAktivnostiZaVrstoSluzbe, addAktivnost, getAktivnostiGledeNaStatus, changeAktivnost };
+module.exports = {
+  Aktivnost,
+  getAktivnosti,
+  getAktivnostiZaVrstoSluzbe,
+  addAktivnost,
+  getAktivnostiGledeNaStatus,
+  changeAktivnost,
+  getAktivnostiById
+};

@@ -9,7 +9,8 @@ const {
   getAktivnostiZaVrstoSluzbe,
   addAktivnost,
   getAktivnostiGledeNaStatus,
-  changeAktivnost
+  changeAktivnost,
+  getAktivnostiById
 } = require("./Aktivnost");
 const { VrstaSluzbe, getVrstaSluzbeById } = require("./VrstaSluzbe");
 
@@ -58,6 +59,16 @@ const Query = new GraphQLObjectType({
         }
       },
       resolve: (parent, args, contex) => getAktivnosti(args.podjetjeId)
+    },
+    aktivnostIDja: {
+      description: "Aktivnost ID-ja",
+      type: Aktivnost,
+      args: {
+        aktivnostId: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => getAktivnostiById(args.aktivnostId)
     },
     aktivnostiSluzbe: {
       description: "Vse aktivnosti za podano sluzbo. Podamo id sluzbe ter id podjetja in dobimo vse aktivnosti, ki ji pripadajo.",
