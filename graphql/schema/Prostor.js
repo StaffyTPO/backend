@@ -16,7 +16,6 @@ const Prostor = new GraphQLObjectType({
 });
 
 const getProstorById = async prostorId => {
-
   const result = await global.pg.query(
     `
     SELECT *
@@ -28,4 +27,18 @@ const getProstorById = async prostorId => {
   return result.rows[0];
 };
 
-module.exports = { Prostor, getProstorById };
+const getProstori = async podjetjeId => {
+  const result = await global.pg.query(
+    `
+    SELECT *
+    FROM prostor
+    WHERE podjetje = $1
+  `,
+    [podjetjeId]
+  );
+  console.log(result.rows);
+
+  return result.rows;
+};
+
+module.exports = { Prostor, getProstorById, getProstori };
