@@ -30,4 +30,16 @@ const getPrioritetaById = async id => {
   return result.rows[0];
 };
 
-module.exports = { Prioriteta, getPrioritetaById };
+const getPrioritetaByPodjetjeId = async podjetjeId => {
+  const result = await global.pg.query(
+    `
+    SELECT *
+    FROM prioriteta
+    WHERE podjetje = $1
+    `,
+    [podjetjeId]
+  )
+  return result.rows;
+}
+
+module.exports = { Prioriteta, getPrioritetaById, getPrioritetaByPodjetjeId };

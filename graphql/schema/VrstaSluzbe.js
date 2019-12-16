@@ -10,23 +10,36 @@ const VrstaSluzbe = new GraphQLObjectType({
       type: GraphQLInt
     },
     naziv: {
-        type: GraphQLString
-    }, 
+      type: GraphQLString
+    },
     barva: {
-        type: GraphQLString
+      type: GraphQLString
     }
   }
 });
 
 const getVrstaSluzbeById = async id => {
-  const result = await global.pg.query(`
+  const result = await global.pg.query(
+    `
     SELECT *
     FROM vrsta_sluzbe
     WHERE id = $1
-  `, 
-  [id]
+  `,
+    [id]
   );
   return result.rows[0];
 };
 
-module.exports = { VrstaSluzbe, getVrstaSluzbeById };
+const getVrsteSluzbeByPodjetjeId = async id => {
+  const result = await global.pg.query(
+    `
+    SELECT *
+    FROM vrsta_sluzbe
+    WHERE podjetje = $1
+    `,
+    [id]
+  );
+  return result.rows;
+}
+
+module.exports = { VrstaSluzbe, getVrstaSluzbeById, getVrsteSluzbeByPodjetjeId };
