@@ -27,7 +27,7 @@ const getProstorById = async prostorId => {
   return result.rows[0];
 };
 
-const getProstori = async podjetjeId => {
+const getProstoriByPodjetjeId = async podjetjeId => {
   const result = await global.pg.query(
     `
     SELECT *
@@ -41,4 +41,4 @@ const getProstori = async podjetjeId => {
   return result.rows;
 };
 
-module.exports = { Prostor, getProstorById, getProstori };
+module.exports = { Prostor, getProstorById, getProstoriByPodjetjeId };
