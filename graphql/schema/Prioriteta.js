@@ -7,21 +7,25 @@ const Prioriteta = new GraphQLObjectType({
       type: GraphQLID
     },
     tip: {
-        type: GraphQLString
-    }, 
+      type: GraphQLString
+    },
     podjetje: {
-        type: GraphQLInt
+      type: GraphQLInt
+    },
+    barva: {
+      type: GraphQLString
     }
   }
 });
 
 const getPrioritetaById = async id => {
-  const result = await global.pg.query(`
+  const result = await global.pg.query(
+    `
     SELECT *
     FROM prioriteta
     WHERE id = $1
-  `, 
-  [id]
+  `,
+    [id]
   );
   return result.rows[0];
 };
