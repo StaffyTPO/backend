@@ -1,5 +1,5 @@
 const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLString, GraphQLList, GraphQLBoolean } = require("graphql");
-
+const { Uporabnik, getUporabnikById } = require("./Uporabnik");
 const Komentar = new GraphQLObjectType({
   name: "Komentar",
   fields: {
@@ -13,13 +13,26 @@ const Komentar = new GraphQLObjectType({
       type: GraphQLString
     },
     uporabnik: {
-      type: GraphQLInt
+      type: Uporabnik,
+      resolve: parent => getUporabnikById(parent.uporabnik)
     },
     aktivnost: {
       type: GraphQLInt
     }
   }
 });
+
+const getKomentarji = async aktivnost => {
+  const result = await global.pg.query(
+    `
+    SELECT *
+    FROM komentar
+    WHERE aktivnost = $1
+    `,
+    [aktivnost]
+  );
+  return result.rows;
+};
 
 const addKomentar = async (sporocilo, datum, uporabnik, aktivnost) => {
   const result = await global.pg.query(
@@ -33,4 +46,4 @@ const addKomentar = async (sporocilo, datum, uporabnik, aktivnost) => {
   return result.rows[0];
 };
 
-module.exports = { Komentar, addKomentar };
+module.exports = { Komentar, getKomentarji, addKomentar };

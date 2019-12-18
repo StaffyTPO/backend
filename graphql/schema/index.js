@@ -2,7 +2,7 @@ const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt
 
 const { Podjetje, getPodjetjeById } = require("./Podjetje");
 const { Uporabnik, getUporabniki, addUporabnik, getUporabnikById } = require("./Uporabnik");
-const { Komentar, addKomentar } = require("./Komentar");
+const { Komentar, getKomentarji, addKomentar } = require("./Komentar");
 const { Prostor, getProstoriByPodjetjeId } = require("./Prostor");
 const {
   Aktivnost,
@@ -123,6 +123,15 @@ const Query = new GraphQLObjectType({
         }
       },
       resolve: (parent, args, contex) => getVrsteSluzbeByPodjetjeId(args.podjetjeId)
+    },
+    komentarji: {
+      type: new GraphQLList(Komentar),
+      args: {
+        aktivnostId: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => getKomentarji(args.aktivnostId)
     }
   }
 });
