@@ -17,7 +17,7 @@ const Slika = new GraphQLObjectType({
 
 const getSlikaURL = async aktivnostId => {
     const result = await global.pg.query(`
-      SELECT url
+      SELECT *
       FROM slika
       WHERE aktivnost = $1
     `, 
