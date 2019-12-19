@@ -15,6 +15,7 @@ const {
 } = require("./Aktivnost");
 const { VrstaSluzbe, getVrsteSluzbeByPodjetjeId } = require("./VrstaSluzbe");
 const { Prioriteta, getPrioritetaByPodjetjeId } = require("./Prioriteta");
+const { Slika, getSlikaURL } = require("./Slika");
 
 const Query = new GraphQLObjectType({
   name: "Query",
@@ -103,6 +104,15 @@ const Query = new GraphQLObjectType({
         }
       },
       resolve: (parent, args, contex) => getProstoriByPodjetjeId(args.podjetjeId)
+    },
+    slike: {
+      type: new GraphQLList(Slika),
+      args: {
+        aktivnostId: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => getSlikaURL(args.aktivnostId)
     },
     prioritete: {
       description: "Vrne vse prioritete v nekem podjetju. Kot argument mu podamo id podjetja.",
