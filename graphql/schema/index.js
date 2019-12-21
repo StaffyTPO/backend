@@ -15,7 +15,7 @@ const {
 } = require("./Aktivnost");
 const { VrstaSluzbe, getVrsteSluzbeByPodjetjeId } = require("./VrstaSluzbe");
 const { Prioriteta, getPrioritetaByPodjetjeId } = require("./Prioriteta");
-const { Slika, getSlikaURL } = require("./Slika");
+const { Slika, getSlikaURL, addSlika } = require("./Slika");
 
 const Query = new GraphQLObjectType({
   name: "Query",
@@ -196,6 +196,22 @@ const Mutation = new GraphQLObjectType({
         }
       },
       resolve: (parent, args, contex) => addKomentar(args.sporocilo, args.datum, args.uporabnik, args.aktivnost)
+    },
+    dodajSliko: {
+      description: "Dodajanje slike, podamo mu id Aktivnosti",
+      type: Slika,
+      args: {
+        id: {
+          type: GraphQLInt
+        },
+        url: {
+          type: GraphQLString
+        },
+        aktivnost: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => addSlika(args.id, args.url, args.aktivnost)
     },
     dodajAktivnost: {
       description: "Dodajanje aktivnosti, možnosti podajati različne parametre, niso obvezni",
