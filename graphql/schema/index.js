@@ -201,9 +201,6 @@ const Mutation = new GraphQLObjectType({
       description: "Dodajanje slike, podamo mu id Aktivnosti",
       type: Slika,
       args: {
-        id: {
-          type: GraphQLInt
-        },
         url: {
           type: GraphQLString
         },
@@ -211,7 +208,7 @@ const Mutation = new GraphQLObjectType({
           type: GraphQLInt
         }
       },
-      resolve: (parent, args, contex) => addSlika(args.id, args.url, args.aktivnost)
+      resolve: (parent, args, contex) => addSlika(args.url, args.aktivnost)
     },
     dodajAktivnost: {
       description: "Dodajanje aktivnosti, možnosti podajati različne parametre, niso obvezni",

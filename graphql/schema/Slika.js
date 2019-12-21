@@ -15,14 +15,14 @@ const Slika = new GraphQLObjectType({
   }
 });
 
-const addSlika = async (id, url, aktivnost) => {
+const addSlika = async (url, aktivnost) => {
   const result = await global.pg.query(
     `
-    INSERT INTO slika(id, url, aktivnost)
-    VALUES ($1,$2,$3)
+    INSERT INTO slika(url, aktivnost)
+    VALUES ($1,$2)
     RETURNING *
   `,
-    [id, url, aktivnost]
+    [url, aktivnost]
   );
   return result.rows[0];
 };
