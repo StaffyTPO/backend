@@ -36,7 +36,7 @@ const getSlikaURL = async aktivnostId => {
     `,
     [aktivnostId]
   );
-  return result.rows;
+  return result.rows[0];
 };
 
 module.exports = { Slika, getSlikaURL, addSlika };

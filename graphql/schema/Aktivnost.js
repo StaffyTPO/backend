@@ -3,6 +3,7 @@ const { Prostor, getProstorById } = require("./Prostor");
 const { VrstaSluzbe, getVrstaSluzbeById } = require("./VrstaSluzbe");
 const { Prioriteta, getPrioritetaById } = require("./Prioriteta");
 const { Status, getStatusById } = require("./Status");
+const { Slika, getSlikaURL } = require("./Slika");
 
 const Aktivnost = new GraphQLObjectType({
   name: "Aktivnost",
@@ -37,6 +38,10 @@ const Aktivnost = new GraphQLObjectType({
     },
     podjetje: {
       type: GraphQLInt
+    },
+    slika: {
+      type: Slika,
+      resolve: parent => getSlikaURL(parent.id)
     }
   }
 });
