@@ -64,4 +64,16 @@ const getUporabnikById = async id => {
   return result.rows[0];
 };
 
-module.exports = { Uporabnik, addUporabnik, getUporabniki, getUporabnikById };
+const getRegistriranUporabnik = async (email, geslo) => {
+  const result = await global.pg.query(
+    `
+      SELECT *
+      FROM uporabnik
+      WHERE email = $1 AND password = $2
+    `,
+    [email, geslo]
+  );
+  return result.rows[0];
+}
+
+module.exports = { Uporabnik, addUporabnik, getUporabniki, getUporabnikById, getRegistriranUporabnik };
