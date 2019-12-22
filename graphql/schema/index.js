@@ -11,7 +11,8 @@ const {
   addAktivnost,
   getAktivnostiGledeNaStatus,
   changeAktivnost,
-  getAktivnostiById
+  getAktivnostiById,
+  opravljeno
 } = require("./Aktivnost");
 const { VrstaSluzbe, getVrsteSluzbeByPodjetjeId } = require("./VrstaSluzbe");
 const { Prioriteta, getPrioritetaByPodjetjeId } = require("./Prioriteta");
@@ -308,6 +309,15 @@ const Mutation = new GraphQLObjectType({
           args.koncni_datum,
           args.podjetje
         )
+    },
+    opravljenaAktivnost: {
+      type: Aktivnost,
+      args: {
+        aktivnostId: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => opravljeno(args.aktivnostId)
     }
   }
 });
