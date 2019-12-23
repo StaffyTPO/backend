@@ -1,6 +1,6 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt, GraphQLBoolean } = require("graphql");
 
-const { Podjetje, getPodjetjeById } = require("./Podjetje");
+const { Podjetje, getPodjetjeById, getVsaPodjetja } = require("./Podjetje");
 const { Uporabnik, getUporabniki, addUporabnik, getUporabnikById, getRegistriranUporabnik } = require("./Uporabnik");
 const { Komentar, getKomentarji, addKomentar } = require("./Komentar");
 const { Prostor, getProstoriByPodjetjeId } = require("./Prostor");
@@ -156,6 +156,11 @@ const Query = new GraphQLObjectType({
         }
       },
       resolve: (parent, args, contex) => getRegistriranUporabnik(args.email, args.geslo)
+    },
+    podjetja: {
+      description: "Vrne vsa podjetja, ki so na voljo.",
+      type: new GraphQLList(Podjetje),
+      resolve: (parent, args, contex) => getVsaPodjetja()
     }
   }
 });

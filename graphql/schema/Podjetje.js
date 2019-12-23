@@ -24,4 +24,14 @@ const getPodjetjeById = async id => {
   return result.rows[0];
 };
 
-module.exports = { Podjetje, getPodjetjeById };
+const getVsaPodjetja = async () => {
+  const result = await global.pg.query(
+    `
+    SELECT *
+    FROM podjetje
+    `
+  );
+  return result.rows;
+}
+
+module.exports = { Podjetje, getPodjetjeById, getVsaPodjetja };
