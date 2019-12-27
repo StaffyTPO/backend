@@ -11,12 +11,13 @@ const {
   addAktivnost,
   getAktivnostiGledeNaStatus,
   changeAktivnost,
+  deleteAktivnost,
   getAktivnostiById,
   opravljeno
 } = require("./Aktivnost");
 const { VrstaSluzbe, getVrsteSluzbeByPodjetjeId } = require("./VrstaSluzbe");
 const { Prioriteta, getPrioritetaByPodjetjeId } = require("./Prioriteta");
-const { Slika, getSlikaURL, addSlika } = require("./Slika");
+const { Slika, getSlikaURL, addSlika, deleteSlika } = require("./Slika");
 
 const Query = new GraphQLObjectType({
   name: "Query",
@@ -229,6 +230,16 @@ const Mutation = new GraphQLObjectType({
       },
       resolve: (parent, args, contex) => addSlika(args.url, args.aktivnost)
     },
+    izbrisiSliko: {
+      description: "Izbrisi sliko aktivnosti z podanim ID-jem aktivnosti",
+      type: Slika,
+      args: {
+        aktivnostId: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => deleteSlika(args.aktivnostId)
+    },
     dodajAktivnost: {
       description: "Dodajanje aktivnosti, možnosti podajati različne parametre, niso obvezni",
       type: Aktivnost,
@@ -314,6 +325,16 @@ const Mutation = new GraphQLObjectType({
           args.koncni_datum,
           args.podjetje
         )
+    },
+    izbrisiAktivnost: {
+      description: "Izbrisi aktivnost z podanim ID-jem aktivnosti",
+      type: Aktivnost,
+      args: {
+        aktivnostId: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => deleteAktivnost(args.aktivnostId)
     },
     opravljenaAktivnost: {
       type: Aktivnost,

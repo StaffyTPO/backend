@@ -27,6 +27,18 @@ const addSlika = async (url, aktivnost) => {
   return result.rows[0];
 };
 
+const deleteSlika = async aktivnostId => {
+  const result = await global.pg.query(
+    `DELETE FROM slika
+     WHERE aktivnost = $1
+     RETURNING *
+    `,
+    [aktivnostId]
+  );
+
+  return result.rows[0];
+};
+
 const getSlikaURL = async aktivnostId => {
   const result = await global.pg.query(
     `
@@ -39,4 +51,4 @@ const getSlikaURL = async aktivnostId => {
   return result.rows[0];
 };
 
-module.exports = { Slika, getSlikaURL, addSlika };
+module.exports = { Slika, getSlikaURL, addSlika, deleteSlika };

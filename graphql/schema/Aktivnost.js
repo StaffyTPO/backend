@@ -104,6 +104,18 @@ const addAktivnost = async (naslov, opis, prostor, prioriteta, vrsta_sluzbe, sta
   return result.rows[0];
 };
 
+const deleteAktivnost = async aktivnostId => {
+  const result = await global.pg.query(
+    `DELETE FROM aktivnost
+     WHERE id = $1
+     RETURNING *
+    `,
+    [aktivnostId]
+  );
+
+  return result.rows[0];
+};
+
 const changeAktivnost = async (id, naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje) => {
   const result = await global.pg.query(
     `UPDATE aktivnost
@@ -128,13 +140,14 @@ const opravljeno = async id => {
     [id]
   );
   return result.rows[0];
-}
+};
 
 module.exports = {
   Aktivnost,
   getAktivnosti,
   getAktivnostiZaVrstoSluzbe,
   addAktivnost,
+  deleteAktivnost,
   getAktivnostiGledeNaStatus,
   changeAktivnost,
   getAktivnostiById,
