@@ -76,4 +76,14 @@ const getRegistriranUporabnik = async (email, geslo) => {
   return result.rows[0];
 }
 
-module.exports = { Uporabnik, addUporabnik, getUporabniki, getUporabnikById, getRegistriranUporabnik };
+const getVsiUporabniki = async () => {
+  const result = await global.pg.query(
+    `
+      SELECT *
+      FROM uporabnik
+    `
+  );
+  return result.rows;
+}
+
+module.exports = { Uporabnik, addUporabnik, getUporabniki, getUporabnikById, getRegistriranUporabnik, getVsiUporabniki };

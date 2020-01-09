@@ -24,4 +24,14 @@ const addZaposlen = async (id_uporabnik, id_vrsta_sluzbe) => {
   return result.rows[0];
 };
 
-module.exports = { addZaposlen, Zaposlen };
+const vsiZaposleni = async () => {
+  const result = await global.pg.query(
+    `
+    SELECT *
+    FROM zaposlen
+  `
+  );
+  return result.rows;
+};
+
+module.exports = { Zaposlen, addZaposlen, vsiZaposleni };

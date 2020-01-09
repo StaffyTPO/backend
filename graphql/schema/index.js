@@ -1,8 +1,8 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt, GraphQLBoolean } = require("graphql");
 
 const { Podjetje, getPodjetjeById, getVsaPodjetja } = require("./Podjetje");
-const { Zaposlen, addZaposlen } = require("./Zaposlen");
-const { Uporabnik, getUporabniki, addUporabnik, getUporabnikById, getRegistriranUporabnik } = require("./Uporabnik");
+const { Zaposlen, addZaposlen, vsiZaposleni } = require("./Zaposlen");
+const { Uporabnik, getUporabniki, addUporabnik, getUporabnikById, getRegistriranUporabnik, getVsiUporabniki } = require("./Uporabnik");
 const { Komentar, getKomentarji, addKomentar } = require("./Komentar");
 const { Prostor, getProstoriByPodjetjeId } = require("./Prostor");
 const {
@@ -163,6 +163,16 @@ const Query = new GraphQLObjectType({
       description: "Vrne vsa podjetja, ki so na voljo.",
       type: new GraphQLList(Podjetje),
       resolve: (parent, args, contex) => getVsaPodjetja()
+    },
+    zaposleni: {
+      description: "Vrne vse zaposlene v bazi.",
+      type: new GraphQLList(Zaposlen),
+      resolve: (parent, args, contex) => vsiZaposleni()
+    },
+    uporabniki: {
+      description: "Vrne vse uporabnike v bazi.",
+      type: new GraphQLList(Uporabnik),
+      resolve: (parent, args, contex) => getVsiUporabniki()
     }
   }
 });
