@@ -1,6 +1,7 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt, GraphQLBoolean } = require("graphql");
 
 const { Podjetje, getPodjetjeById, getVsaPodjetja } = require("./Podjetje");
+const { Zaposlen, addZaposlen } = require("./Zaposlen");
 const { Uporabnik, getUporabniki, addUporabnik, getUporabnikById, getRegistriranUporabnik } = require("./Uporabnik");
 const { Komentar, getKomentarji, addKomentar } = require("./Komentar");
 const { Prostor, getProstoriByPodjetjeId } = require("./Prostor");
@@ -344,6 +345,19 @@ const Mutation = new GraphQLObjectType({
         }
       },
       resolve: (parent, args, contex) => opravljeno(args.aktivnostId)
+    },
+    dodajZaposlenega: {
+      description: "Dodajanje zaposlenega",
+      type: Zaposlen,
+      args: {
+        uporabnik_id: {
+          type: GraphQLInt
+        },
+        vrstaSluzbe_id: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => addZaposlen(args.uporabnik_id, args.vrstaSluzbe_id)
     }
   }
 });
