@@ -142,6 +142,17 @@ const opravljeno = async id => {
   return result.rows[0];
 };
 
+const getAktivnostiSluzbe = async id => {
+  const result = await global.pg.query(
+    `SELECT *
+    FROM aktivnost
+    WHERE vrsta_sluzbe = $1
+    `,
+    [id]
+  );
+  return result.rows;
+}
+
 module.exports = {
   Aktivnost,
   getAktivnosti,
@@ -151,5 +162,6 @@ module.exports = {
   getAktivnostiGledeNaStatus,
   changeAktivnost,
   getAktivnostiById,
-  opravljeno
+  opravljeno,
+  getAktivnostiSluzbe
 };

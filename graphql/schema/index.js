@@ -14,7 +14,8 @@ const {
   changeAktivnost,
   deleteAktivnost,
   getAktivnostiById,
-  opravljeno
+  opravljeno,
+  getAktivnostiSluzbe
 } = require("./Aktivnost");
 const { VrstaSluzbe, getVrsteSluzbeByPodjetjeId, getVrstaSluzbeById } = require("./VrstaSluzbe");
 const { Prioriteta, getPrioritetaByPodjetjeId } = require("./Prioriteta");
@@ -193,6 +194,16 @@ const Query = new GraphQLObjectType({
         }
       },
       resolve: (parent, args, contex) => getVrstaSluzbeById(args.id)
+    },
+    aktivnostiPodaneSluzbe: {
+      description: "Vrne vse aktivnosti za sluzbo s podanim id-jem.",
+      type: new GraphQLList(Aktivnost),
+      args: {
+        idSluzbe: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => getAktivnostiSluzbe(args.idSluzbe)
     }
   }
 });
