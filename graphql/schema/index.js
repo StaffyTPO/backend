@@ -309,6 +309,9 @@ const Mutation = new GraphQLObjectType({
         },
         podjetje: {
           type: GraphQLInt
+        },
+        uporabnik: {
+          type: GraphQLInt
         }
       },
       resolve: (parent, args, contex) =>
@@ -320,7 +323,8 @@ const Mutation = new GraphQLObjectType({
           args.vrsta_sluzbe,
           args.status,
           args.koncni_datum,
-          args.podjetje
+          args.podjetje,
+          args.uporabnik
         )
     },
     spremeniAktivnost: {

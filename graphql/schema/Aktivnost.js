@@ -4,6 +4,7 @@ const { VrstaSluzbe, getVrstaSluzbeById } = require("./VrstaSluzbe");
 const { Prioriteta, getPrioritetaById } = require("./Prioriteta");
 const { Status, getStatusById } = require("./Status");
 const { Slika, getSlikaURL } = require("./Slika");
+const { Uporabnik, getUporabnikById } = require("./Uporabnik");
 
 const Aktivnost = new GraphQLObjectType({
   name: "Aktivnost",
@@ -42,6 +43,10 @@ const Aktivnost = new GraphQLObjectType({
     slika: {
       type: Slika,
       resolve: parent => getSlikaURL(parent.id)
+    },
+    uporabnik: {
+      type: Uporabnik,
+      resolve: parent => getUporabnikById(parent.uporabnik)
     }
   }
 });
@@ -92,13 +97,13 @@ const getAktivnostiGledeNaStatus = async (podjetjeId, statusId) => {
   return result.rows;
 };
 
-const addAktivnost = async (naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje) => {
+const addAktivnost = async (naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje, uporabnik) => {
   const result = await global.pg.query(
-    `INSERT INTO aktivnost(naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje)
-    VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+    `INSERT INTO aktivnost(naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje, uporabnik)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
     RETURNING *
     `,
-    [naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje]
+    [naslov, opis, prostor, prioriteta, vrsta_sluzbe, status, koncni_datum, podjetje, uporabnik]
   );
 
   return result.rows[0];
