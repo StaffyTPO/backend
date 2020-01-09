@@ -1,7 +1,7 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt, GraphQLBoolean } = require("graphql");
 
 const { Podjetje, getPodjetjeById, getVsaPodjetja } = require("./Podjetje");
-const { Zaposlen, addZaposlen, vsiZaposleni } = require("./Zaposlen");
+const { Zaposlen, addZaposlen, vsiZaposleni, vrstaSluzbeZaposlenega } = require("./Zaposlen");
 const { Uporabnik, getUporabniki, addUporabnik, getUporabnikById, getRegistriranUporabnik, getVsiUporabniki } = require("./Uporabnik");
 const { Komentar, getKomentarji, addKomentar } = require("./Komentar");
 const { Prostor, getProstoriByPodjetjeId } = require("./Prostor");
@@ -16,7 +16,7 @@ const {
   getAktivnostiById,
   opravljeno
 } = require("./Aktivnost");
-const { VrstaSluzbe, getVrsteSluzbeByPodjetjeId } = require("./VrstaSluzbe");
+const { VrstaSluzbe, getVrsteSluzbeByPodjetjeId, getVrstaSluzbeById } = require("./VrstaSluzbe");
 const { Prioriteta, getPrioritetaByPodjetjeId } = require("./Prioriteta");
 const { Slika, getSlikaURL, addSlika, deleteSlika } = require("./Slika");
 
@@ -173,6 +173,26 @@ const Query = new GraphQLObjectType({
       description: "Vrne vse uporabnike v bazi.",
       type: new GraphQLList(Uporabnik),
       resolve: (parent, args, contex) => getVsiUporabniki()
+    },
+    vrstaSluzbeZaposlenegaUporabnika: {
+      description: "Vrne vrsto sluzbe uporabnika, katerega id podamo.",
+      type: Zaposlen,
+      args: {
+        id_uporabnika: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => vrstaSluzbeZaposlenega(args.id_uporabnika)
+    },
+    vrstaSluzbeById: {
+      description: "Vrne vrsto sluzbe s podanim id-jem.",
+      type: VrstaSluzbe,
+      args: {
+        id: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args, contex) => getVrstaSluzbeById(args.id)
     }
   }
 });
